@@ -195,9 +195,8 @@ Follow the 2 links below to install Git and Build Tools
 11. Follow by `cd rab`
 12. Setup your phone according to app requirements as instructed above and run all required apps on phone
 13. Make sure your Pokemon Go is at map page and **zoomed out to the max**.
-14. Make sure your device are connected to your machine, run this command first in Terminal or PowerShell
-   `python -m uiautomator2 init`
-   `python run.py`
+14. Make sure your device are connected to your machine, run this command in Terminal or PowerShell
+   `python -m uiautomator2 init` and after you run `python run.py`
 15. Allow installation of automator on your Phone
 16. To run multiple devices, first run adb devices to get all your device ID connected to your computer
 17. Then run each command on their own terminal/shell console
