@@ -3,10 +3,20 @@
 [![RAB Video Demo](https://img.youtube.com/vi/wtpJ9_av-qc/0.jpg)](https://www.youtube.com/watch?v=wtpJ9_av-qc)
 
 ## Changelog
-### RAB 1.06
-- Added Pokemon Inventory Mangement. RAB will now auto keep or release pokemon in your bag when it is full
-- New options for Pokemon Inventory Mangement are `enable_poke_management`, `manage_poke_on_start`, `inventory_iv` and `stop_check_at`. Please check config.example.yaml and update your exising config accordingly.
-- `keep_strong_shadow` and `keep_legendary` options added under catch
+### RAB 1.07
+**NOTE:** Due to the recent announcement by Polygon#, we will be removing Network mode of Polygon# from RAB. What does this mean? It mean Polygon# users will no longer be able to teleport to exactly where pokestops/pokemon are. No longer able to automatically capture shiny or 100 Polygon# found. All features of Polygon# will be removed.
+
+Due to this sudden changes, we are unable to fully optimize support for Polygon# users and you might see your avatar stuck at different places frequently. As such I suggest you switch to Pokemod temporary.
+
+- Added send enounter/caught information to Discord
+- Changed default `spin_pokestop` from false to true
+- Bug Fix: Team Rocket manage pokemon button not recognized 
+- Bug Fix: Not feeding berries
+- Auto scripts for Windows User to simplify installation process
+- Remove network setting for Polygon#. Now Polygon# will work just like HAL. 
+- Options orginally meant for Polygon# are removed
+- Added only_shiny mode. Also known as shiny tap. It will only catch if poke is shiny, else flee.
+- Added navigation_offset option. For phones with buttons and you can't disable/remove them, we now have an option for you to remove it. Set the height of your navigation bar here.
 
 [Changelog History](https://github.com/MerlionRock/RealAndroidBot/blob/master/Changelog.md)
 
@@ -23,7 +33,6 @@ Join our [Discord Channel](https://discord.gg/HZXCzDXXJJ)
 - Auto Item management
 - (NEW) Auto Pokemon Bag management
 - Auto Team Rocket Battle (HAL & Polygon# Only)
-- Catch Shiny that 3rd Party App Found (Polygon# Only)
 - Integration with Telegram feed to allow PvP/100IV Snipe (Not Live Yet)
 - Integration with Telegram feed to allow Shiny Checking (Not Live Yet)
 - Non rooted support with PGSharp Free or Paid version (**NO NOT USE IT ON MAIN ACCOUNT**)
@@ -47,10 +56,9 @@ Join our [Discord Channel](https://discord.gg/HZXCzDXXJJ)
 
 1. (Optional) Install [Pokemod or HAL](https://pokemod.dev/) or [Polygon#](https://discord.gg/QURp9gA) or [PGSharp](https://www.pgsharp.com/) Please set the correct client settings in config file
 2. (Pokemod, HAL and Polygon# Only) GPS Joystick, unlock version. Download from their [official website](http://gpsjoystick.theappninjas.com/faq/) 
-- (Pokemod, HAL Only) Create/download a GPX Route and run it in background. Make sure joystick are hidden from view.
+- (Pokemod, HAL, Polygon# Only) Create/download a GPX Route and run it in background. Make sure joystick are hidden from view.
 - (PGSharp Paid Only) Create/download a GPX Route and run it. Do not hide PGSharp. Move joystick away from location that will block text.
-- (Polygon#) Just spoof to a location with lot's of pokestops. RAB will handle the rest.
-- (Pokemod and HAL Only) Recommended Speed 7km per hour or less
+- (Pokemod, HAL, Polygon# Only) Recommended Speed 7km per hour or less
 3. (Optional, if your phone's resolution is more than 1920 x 1080) Go to playstore and download Easy DPI Changer (or https://www.apkmirror.com/apk/chornerman_studio/easy-dpi-changer-root/), resize your phone to 1080 x 1920, reset it when you are not running the script. (**Update**: The bot now auto change your phone size. However, it's handy to have this app installed in case the bot is unable to reset back your phone to orginal screen resolution.)
 4. Your Pokemon Go Game MUST BE English
 5. When running the scripts at your computer, the following app/services must be running on your phone
@@ -84,15 +92,7 @@ Join our [Discord Channel](https://discord.gg/HZXCzDXXJJ)
 *Enable or disable the modules in config.yaml accordingly*
 
 ## Polygon# Enhancer Support
-
-- Instant catch is not recommended to be disabled for Polygon#, settings related to keeping Pokemon in config will not apply to Polygon#
-- Note that RAB will attempt to gather a few information from Polygon# first before starting to catch Pokemon. As such you might see RAB attempt to spin pokestops continously for a few mintues before catching. It is normal.
-
 ### Advanced
-- Enable `Send data to custom backend`
-- Set backend IP Address to the IP of the machine that you are running RAB
-- How to find your machine's IP Guide [Windows](https://www.wikihow.com/Check-a-Computer-IP-Address) | [Mac](https://www.hellotech.com/guide/for/how-to-find-ip-address-on-mac)
-- Enter a port number that you set in config. Default 5120. If you are using more than one device, each device must have their own config and with their own port number set.
 - Encounter nameplates format `{default} LVL{lvl}\nIV{prc0}% {ivs}`
 - Pokemon panel nameplate format `{default}`
 
@@ -133,77 +133,59 @@ brew install tesseract (install homebrew if you have not)
 ```
 
 ### Linux
-```sudo apt-get install tesseract-ocr```
-
-### Windows
-- Install from [tesseract](https://github.com/UB-Mannheim/tesseract/wiki)
-- [Full Installation Instructions](https://tesseract-ocr.github.io/tessdoc/Home.html)
-- Note down your installation path. Example `c:\Program Files\Tesseract-OCR\`
-- On your Windows search bar type `env`, click on Edit the system environment variables
-- Under Advance click Environment Variables, select path, click edit, click new and enter the Tesseract installation path that you note down in pervious step.
-- Restart your windows
-- After restart, run `tesseract -v` in PowerShell or Command Prompt. The bot will not work if this step is not done correctly.
-
-
-*To test if you have successfully install Tesseract, run "tesseract -v" at your OS's terminal/command prompt/power shell. The bot will only works if Tesseract is installed correctly*
-
-## Install ADB
-
-### Mac User
-
-1. Using Terminal, install homebrew if you do not have it
+1. Install tesseract via apt by using the command
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+sudo apt-get install tesseract-ocr
 ```
-2. Install adb
+2. Install adb via apt by using the command
 ```
-brew cask install android-platform-tools
-```
-3. Connect your device to your mac and run the following to see if it can detect your device
-```
-adb devices
+sudo apt-get install adb
 ```
 
-### Windows User/Linux
 
-Follow this Guide, follow the instructions for Windows/Linux
-1. [Install ADB](https://www.xda-developers.com/install-adb-windows-macos-linux/)
+## Installing all dependencies via choclatey (Windows User Only)
+- For those who don't know what choclatey is, it's just like apt-get in ubuntu/Debian if u know what it is. If u want to know more about it before you use it please visit this [link](https://chocolatey.org/) 
+### Installing Choclatey
+1. Open the PowerShell as administrator
+2. You must ensure Get-ExecutionPolicy is not Restricted, for that you can use the following command in the powershell
+   ```Set-ExecutionPolicy Unrestricted```
+3. Now run the command
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) 
+```
 
-Then set your ADB to PATH system variable, follow this [guide](https://www.xda-developers.com/adb-fastboot-any-directory-windows-linux/)
-
-## Install Git And Build Tools for C++ (Windows User Only)
-### For Windows
-
-Follow the 2 links below to install Git and Build Tools
-
-1. [Install Git](https://www.computerhope.com/issues/ch001927.htm)
-- Please ensure that in the **Adjusting your PATH environment** section, you keep the default **Use Git from the command line and also from 3rd-party software** option!
-2. Install [C++ Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=16) 
+### Installing Git with choclatey and downloading RAB
+1. Open PowerShell as administrator
+2. Use the command ```choco install git -y``` to install git. (Type "y" and enter if it prompts to).
+3. Enter the C drive directory by using ```cd C:\```
+4. Clone this repo by using the command ```git clone --recursive https://github.com/MerlionRock/RealAndroidBot.git```
+You will find the RealAndroidBot folder present in the C drive directory after executing this command 
 
 ## Setting up the project
-1. (Windows Only) Start --> Windows Powershell (expand the folder) --> Right click, run as Administrator. Type cd c:\
-   - 1.1 (Ubuntu/Linux) Open terminal and type: cd ~/
-2. (Windows Only) Type python3 in Powershell, this will bring up Window store and will install Python 3 to your system
-3. (Windows Only) Set-ExecutionPolicy RemoteSigned Enter Y to allow execution of scripts
+1. (Windows Only) ==> Open the RealAndroidBot folder (Which is present in the C drive) in FileExplorer.
+   - 1.1 (Ubuntu/Linux) Open terminal and type: `cd ~/`
+2. (Windows Only) ==> Right click on the Auto_1.ps1 and select 'Run with PowerShell'
+3. (Windows Only) ==> The installation will take a little time and it will prompt you for confirmation to reboot, press y and enter to reboot (While the process is ongoing the powershell may ask you to prompt for installation, for that just type 'y' and enter everytime).
 4. (Mac and Linux) Install Python 3.7 or later (https://www.python.org/downloads/)
-5. Still at your terminal or PowerShell, type git clone --recursive https://github.com/MerlionRock/RealAndroidBot.git
-6. Follow by python3 -m venv RealAndroidBot
-7. Follow by (Mac and Linux) source RealAndroidBot/bin/activate (Windows) RealAndroidBot\Scripts\activate
-8. Follow by cd RealAndroidBot
+5. (Windows Only) ==> After the reboot go to the c:\RealAndroidBot again in your FileExplorer and right click on Auto_2.ps1 and select 'Run with PowerShell'(This will install the visual c++ build tools).
+6. (Windows Only) ==> Now use `cd C:\` and Follow by using `python3 -m venv RealAndroidBot`
+Note: If your screen return python after this command, please type in this instead `python -m venv RealAndroidBot` 
+(Mac and Linux) Follow the same step but skip the `cd ..` part
+7. Follow by (Mac and Linux) `source RealAndroidBot/bin/activate` (Windows) `RealAndroidBot\Scripts\activate`
+8. Follow by `cd RealAndroidBot`
 9. Copy config.example.yaml to rab/config.yaml and configure it by using either notepad or notepad++. 
-10. Back to Terminal or PowerShell, type pip install -r requirements.txt
-11. Follow by cd rab
+10. Back to Terminal or PowerShell, type `pip install -r requirements.txt`
+11. Follow by `cd rab`
 12. Setup your phone according to app requirements as instructed above and run all required apps on phone
 13. Make sure your Pokemon Go is at map page and **zoomed out to the max**.
-14. Make sure your device are connected to your machine, run this command first in Terminal or PowerShell
-14.1 python -m uiautomator2 init
-14.2 python run.py
-15. Allow installation of automator on your Phone
+14. Make sure your device are connected to your machine, run this command in Terminal or PowerShell `python -m uiautomator2 init`. Check your phone and allow installation of automator on your Phone
+15. Please ensure you have copied config.example.yaml to rab/config.yaml and configure it, then run 
+   `python run.py` in your terminal or powershell
 16. To run multiple devices, first run adb devices to get all your device ID connected to your computer
 17. Then run each command on their own terminal/shell console
-17.1 python run.py --device-id YOUR_DEVICE_ID
+    `python run.py --device-id YOUR_DEVICE_ID`
 18. To use a different config file (good for multiple devices setup) run
-18.1 python run.py --device-id YOUR_DEVICE_ID --config-filename YOUR_CONFIG_FILE_NAME
+    `python run.py --device-id YOUR_DEVICE_ID --config-filename YOUR_CONFIG_FILE_NAME`
 19. Ctrl + C to terminate the program (you might have to do it more than once)
 20. Whenever you want to run the scripts again, remember to run Step 7 first follow by (mac/linux) `cd RealAndroidBot/rab` or (Windows) `cd RealAndroidBot\rab`
 21. To update your files from github repo, type `git pull`
