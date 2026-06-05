@@ -11,7 +11,7 @@ imutils
 uiautomator2
 cryptg
 protobuf==5.29.6
-packaging==21.3
+packaging==25.0
 pytesseract
 pymysql
 filelock>=3.20.3
